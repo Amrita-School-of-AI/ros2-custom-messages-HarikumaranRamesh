@@ -4,8 +4,8 @@
 #include <string>
 
 #include "rclcpp/rclcpp.hpp"
-// Include the generated message header
-#include "custom_msgs/msg/robot_status.hpp"
+// Correct package name
+#include "ros2_custom_msgs/msg/robot_status.hpp"
 
 using namespace std::chrono_literals;
 
@@ -17,11 +17,9 @@ public:
           battery_level_(100.0),
           mission_count_(0)
     {
-        // Create publisher
-        publisher_ = this->create_publisher<custom_msgs::msg::RobotStatus>(
+        publisher_ = this->create_publisher<ros2_custom_msgs::msg::RobotStatus>(
             "/robot_status", 10);
 
-        // Create timer (1000 ms)
         timer_ = this->create_wall_timer(
             1000ms,
             std::bind(&StatusPublisher::timer_callback, this));
@@ -30,7 +28,7 @@ public:
 private:
     void timer_callback()
     {
-        custom_msgs::msg::RobotStatus msg;
+        ros2_custom_msgs::msg::RobotStatus msg;
 
         msg.robot_name = "Explorer1";
         msg.battery_level = battery_level_;
@@ -51,7 +49,7 @@ private:
     }
 
     rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<custom_msgs::msg::RobotStatus>::SharedPtr publisher_;
+    rclcpp::Publisher<ros2_custom_msgs::msg::RobotStatus>::SharedPtr publisher_;
     double battery_level_;
     int32_t mission_count_;
 };
